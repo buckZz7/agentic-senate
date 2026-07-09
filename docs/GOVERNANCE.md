@@ -52,3 +52,8 @@ Moving from Phase 0 → 1 → 2 is itself a constitutional amendment (Article VI
 §4). Expected evidence for advancement: a track record in `deliberations/`
 showing Senate verdicts aligning with good outcomes, plus decision-quality
 evals in `evals/`.
+
+## Glossary
+
+- **Verdict** — the Senate's collective decision on a proposal: APPROVE, REJECT, or ESCALATE (to the Custodian).
+- **Transcript** — the full public record of a deliberation, committed under `deliberations/`.
