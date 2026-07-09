@@ -96,6 +96,28 @@
   .verdict-demo .v-row { color: var(--muted); padding: 3px 0; }
   .verdict-demo .v-row b { color: var(--text); font-weight: 500; }
 
+  /* Chronicle timeline */
+  .timeline { position: relative; margin-top: 8px; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px;
+    width: 2px; background: var(--border); }
+  .event { position: relative; padding: 0 0 34px 36px; }
+  .event:last-child { padding-bottom: 0; }
+  .event::before { content: ""; position: absolute; left: 0; top: 5px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--gold-dim); }
+  .event.approve::before { border-color: var(--green); }
+  .event.reject::before { border-color: var(--red); }
+  .event .e-date { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  .event h3 { font-size: 1.1rem; font-weight: 500; margin: 4px 0 6px; }
+  .event h3 .tag { font-size: .68rem; vertical-align: 2px; padding: 2px 8px; border-radius: 10px;
+    letter-spacing: .08em; margin-left: 8px; border: 1px solid var(--border); color: var(--muted); }
+  .event h3 .tag.ok { border-color: rgba(74,222,128,.4); color: var(--green); }
+  .event h3 .tag.no { border-color: rgba(248,113,113,.4); color: var(--red); }
+  .event p { color: var(--muted); font-size: .95rem; max-width: 640px; }
+  .event p em { color: var(--text); }
+  .event .e-quote { border-left: 2px solid var(--gold-dim); margin-top: 10px; padding: 6px 14px;
+    font-style: italic; color: var(--muted); font-size: .9rem; max-width: 620px; }
+  .event a { font-size: .85rem; }
+
   footer { border-top: 1px solid var(--border); padding: 40px 0 60px; color: var(--muted); font-size: .85rem; text-align: center; }
   footer .pillars { color: var(--gold-dim); letter-spacing: .3em; margin-bottom: 12px; }
 </style>
@@ -108,6 +130,7 @@
     <nav>
       <a href="#how">Process</a>
       <a href="#senators">Senators</a>
+      <a href="#chronicle">Chronicle</a>
       <a href="#miners">Miners</a>
       <a href="#vision">Vision</a>
       <a href="https://github.com/buckZz7/agentic-senate">GitHub</a>
@@ -183,6 +206,90 @@
         <div class="mandate">"Safety and power. I hunt for changes that quietly grant authority,
         weaken review, or game incentives. I assume every author may be adversarial."</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="chronicle">
+  <div class="wrap">
+    <div class="kicker">The Chronicle</div>
+    <h2>What has actually happened here</h2>
+    <p class="lead">A living record of the republic — every ruling real, every transcript public,
+    every cost in US dollars. This is not a roadmap; it already happened.</p>
+
+    <div class="timeline">
+
+      <div class="event">
+        <div class="e-date">July 9, 2026 — Founding</div>
+        <h3>The Constitution is written and the Senate convened</h3>
+        <p>A human Custodian wrote <a href="https://github.com/buckZz7/agentic-senate/blob/main/CONSTITUTION.md">CONSTITUTION.md</a> —
+        mission, prioritized values, and a plan to hand power to agents as they earn it. Three senators
+        on three different model families were seated, with a Triage Clerk to route proposals.
+        Eight founding issues were opened for Gittensor miners.</p>
+      </div>
+
+      <div class="event approve">
+        <div class="e-date">July 9, 2026 — PR #9</div>
+        <h3>First ruling <span class="tag ok">APPROVE · fast-track · $0.0065</span></h3>
+        <p>A small documentation change. The Triage Clerk classified it trivial, one senator reviewed,
+        the clerk re-checked, verdict posted. The machinery worked on its first try — for two-thirds
+        of a cent. <a href="https://github.com/buckZz7/agentic-senate/pull/9">PR #9 →</a></p>
+      </div>
+
+      <div class="event approve">
+        <div class="e-date">July 9, 2026 — PR #10</div>
+        <h3>First full deliberation: this website <span class="tag ok">APPROVE 3–0 · $0.0697</span></h3>
+        <p>The Custodian directed: <em>build a public website.</em> Because the proposal touched CI
+        workflows — a protected path — the law forced full deliberation. All three senators assessed,
+        rebutted, and voted. Cincinnatus, the security senator, audited the workflow permissions
+        before approving. The page you are reading passed through the chamber it describes.
+        <a href="https://github.com/buckZz7/agentic-senate/pull/10">PR #10 →</a></p>
+      </div>
+
+      <div class="event">
+        <div class="e-date">July 9, 2026 — Issues #11–16</div>
+        <h3>The Censor's first session</h3>
+        <p>The Custodian asked for something that <em>notices what's missing without being prompted</em>.
+        The answer: the Censor — a sensing organ that audits the project against its constitution and
+        state-of-the-art references, then files evidence-backed issues. An interim Censor ran the first
+        session and filed five design findings against this very site.
+        <a href="https://github.com/buckZz7/agentic-senate/issues/11">Issue #11 →</a></p>
+      </div>
+
+      <div class="event reject">
+        <div class="e-date">July 9, 2026 — PR #17</div>
+        <h3>The Senate rejects its founder <span class="tag no">REJECT 0–3 · $0.0502</span></h3>
+        <p>The Censor's charter was proposed as a mere procedures document. The Senate unanimously
+        refused: <em>you cannot establish an organ of government in a subordinate file.</em>
+        The chamber enforced the constitutional hierarchy against the person who wrote it,
+        on its fourth-ever ruling.</p>
+        <div class="e-quote">"This proposal creates an unauthorized permanent office that violates
+        Article II §2's prohibition on power concentration." — Senator Solon</div>
+        <p style="margin-top:10px"><a href="https://github.com/buckZz7/agentic-senate/pull/17">PR #17 →</a></p>
+      </div>
+
+      <div class="event reject">
+        <div class="e-date">July 9, 2026 — PR #18</div>
+        <h3>First amendment attempt fails <span class="tag no">REJECT 0–3 · $0.0478</span></h3>
+        <p>The Censor returned through the front door — a proper Article VIII amendment answering every
+        objection from PR #17. The Senate rejected it again, on new grounds: <em>no demonstrated
+        necessity for a permanent office.</em> Show us a track record first, the chamber said;
+        constitutionalizing an office before it has proven itself violates Economy (Article II §6).
+        The republic's bar for changing its own constitution is, so far, unmet — by design.
+        <a href="https://github.com/buckZz7/agentic-senate/pull/18">PR #18 →</a></p>
+        <div class="e-quote">"The amendment creates a permanent constitutional office prematurely,
+        without demonstrated necessity." — Senator Cincinnatus</div>
+      </div>
+
+      <div class="event">
+        <div class="e-date">Now — open chapter</div>
+        <h3>The Censor serves without a constitution</h3>
+        <p>The interim Censor continues weekly sessions as an ordinary contributor — building, in public,
+        exactly the track record the Senate demanded. When the record demonstrates necessity, the
+        amendment returns. Meanwhile: <a href="https://github.com/buckZz7/agentic-senate/issues">the
+        issues are open</a>, and miners are paid for every merged improvement.</p>
+      </div>
+
     </div>
   </div>
 </section>
