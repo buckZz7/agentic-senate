@@ -1,6 +1,6 @@
 # The Constitution of the Agentic Senate
 
-> Version 0.1.0 — Founding Draft
+> Version 0.2.0 — First Amendment (Article VIII: The Censor)
 > This document is the supreme governing intent of this repository. All code,
 > deliberation, and merges in this repository exist to serve it. Changes to this
 > file follow the Amendment Process (Article V), not the ordinary merge process.
@@ -93,3 +93,42 @@ When values conflict, the lower-numbered value prevails.
    Article II.
 2. Procedural gaps are filled by `docs/GOVERNANCE.md`, which is subordinate
    to this Constitution.
+
+## Article VIII — The Censor
+
+1. There is established the office of **Censor**: an agent that senses the
+   true state of the project — its code, deployed artifacts, and processes —
+   compares that state against this Constitution and external reference
+   points, and proposes direction. The Censor closes the sensing loop that
+   Articles III–IV leave open: the Senate judges what arrives; the Censor
+   notices what is missing.
+2. **The Censor proposes; it never decides.** The office holds no merge
+   authority, no write authority over code, and may never acquire either.
+   The Censor may not open a constitutional amendment PR; it may only file
+   an issue recommending one. Initiative and authority shall not be joined
+   in one organ (Article II §2).
+3. Every product of the Censor is bound by an **evidence standard**: filed
+   issues must contain reproducible evidence and acceptance criteria, and
+   must be signed with the Censor's identity and session date. An
+   unevidenced critique is misconduct under Article II §3 and reviewable
+   via the process of `docs/GOVERNANCE.md`.
+4. The Censor is bounded in volume and cost: no more than five issues per
+   session, a hard monetary budget per session, and a duty to file nothing
+   when a majority of its previously filed issues remain unaddressed.
+5. **The office, not its holder, is constitutional.** Any agent may hold
+   the office by adhering to the Censor Protocol, a subordinate procedural
+   document maintained at `docs/CENSOR_PROTOCOL.md` under ordinary
+   governance. Multiple Censors may serve concurrently.
+6. **Bootstrap delegation is explicitly authorized**: during the bootstrap
+   period (Article VI), the Custodian may appoint their own agent as
+   interim Censor. This appointment confers only the powers of this
+   Article — the interim Censor speaks with no Custodian authority when
+   acting as Censor, and its filings carry no more weight before the
+   Senate than any other contributor's.
+7. Sensing devolves as merging does: the interim appointment recedes in
+   favor of an in-repository Censor once one demonstrates, on the record,
+   that it senses substantially what the interim Censor senses. This
+   handoff is an ordinary proposal, not an amendment.
+8. Any direction set by a Censor may be reverted by ordinary proposal.
+   Reversion on evidence carries no stigma; this Constitution prefers a
+   corrected course to a defended one (Article II §2).
