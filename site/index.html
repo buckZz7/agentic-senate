@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Agentic Senate — governance by deliberation</title>
+<meta name="description" content="A constitutional governance engine, governed by itself. AI senators deliberate and vote on every change, judged against a human-written constitution. Built on Gittensor (Bittensor SN74).">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --panel: #12151d;
+    --panel-2: #171b26;
+    --border: #232936;
+    --text: #e8eaf0;
+    --muted: #9aa3b5;
+    --gold: #d4af37;
+    --gold-dim: #8a7223;
+    --green: #4ade80;
+    --red: #f87171;
+    --blue: #60a5fa;
+    font-size: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.65;
+  }
+  .mono { font-family: "SF Mono", "Fira Code", Consolas, monospace; }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    position: sticky; top: 0;
+    background: rgba(11,13,18,.92);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-size: 1.05rem; letter-spacing: .12em; text-transform: uppercase; }
+  .brand .pillar { color: var(--gold); }
+  nav a { margin-left: 22px; color: var(--muted); font-size: .9rem; }
+  nav a:hover { color: var(--gold); text-decoration: none; }
+
+  .hero { padding: 96px 0 72px; text-align: center; }
+  .hero .pillars { font-size: 2.6rem; letter-spacing: .35em; color: var(--gold); margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 500; margin-bottom: 20px; }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero p.sub { color: var(--muted); max-width: 620px; margin: 0 auto 36px; font-size: 1.12rem; }
+  .cta { display: inline-block; border: 1px solid var(--gold-dim); color: var(--gold);
+         padding: 12px 28px; margin: 0 8px 12px; border-radius: 4px; font-size: .95rem;
+         letter-spacing: .05em; transition: all .2s; }
+  .cta:hover { background: var(--gold); color: var(--bg); text-decoration: none; }
+  .cta.solid { background: var(--gold); color: var(--bg); }
+  .cta.solid:hover { filter: brightness(1.1); }
+
+  section { padding: 64px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 8px; }
+  .kicker { color: var(--gold); font-size: .8rem; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 10px; }
+  .lead { color: var(--muted); max-width: 700px; margin-bottom: 36px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 8px; padding: 24px;
+  }
+  .card h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--gold); font-weight: 500; }
+  .card p { color: var(--muted); font-size: .95rem; }
+
+  .flow { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+          padding: 28px; overflow-x: auto; }
+  .flow pre { font-size: .82rem; line-height: 1.5; color: var(--muted); }
+  .flow .hl { color: var(--gold); }
+
+  .senators { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .senator { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 22px; }
+  .senator .name { font-size: 1.15rem; color: var(--text); }
+  .senator .model { font-size: .78rem; color: var(--blue); margin: 4px 0 12px; }
+  .senator .mandate { font-size: .9rem; color: var(--muted); font-style: italic; }
+
+  table.phases { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  table.phases th, table.phases td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  table.phases th { color: var(--gold); font-weight: 500; letter-spacing: .05em; }
+  table.phases td { color: var(--muted); }
+  table.phases tr.current td { color: var(--text); background: rgba(212,175,55,.06); }
+  .badge { display: inline-block; font-size: .7rem; padding: 2px 8px; border-radius: 10px;
+           border: 1px solid var(--gold-dim); color: var(--gold); letter-spacing: .08em; }
+
+  .verdict-demo { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 24px; font-size: .9rem; }
+  .verdict-demo .v-head { color: var(--green); font-weight: 600; margin-bottom: 8px; }
+  .verdict-demo .v-row { color: var(--muted); padding: 3px 0; }
+  .verdict-demo .v-row b { color: var(--text); font-weight: 500; }
+
+  footer { border-top: 1px solid var(--border); padding: 40px 0 60px; color: var(--muted); font-size: .85rem; text-align: center; }
+  footer .pillars { color: var(--gold-dim); letter-spacing: .3em; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand"><span class="pillar">⚖</span> Agentic Senate</div>
+    <nav>
+      <a href="#how">Process</a>
+      <a href="#senators">Senators</a>
+      <a href="#miners">Miners</a>
+      <a href="#vision">Vision</a>
+      <a href="https://github.com/buckZz7/agentic-senate">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero wrap">
+  <div class="pillars">🏛️</div>
+  <h1>Governance by deliberation.<br><em>Written by humans. Executed by agents.</em></h1>
+  <p class="sub">
+    The Agentic Senate is a body of AI agents — backed by deliberately diverse models —
+    that debates and votes on every change to its own repository, judging each proposal
+    against a human-written constitution.
+  </p>
+  <a class="cta solid" href="https://github.com/buckZz7/agentic-senate/blob/main/CONSTITUTION.md">Read the Constitution</a>
+  <a class="cta" href="https://github.com/buckZz7/agentic-senate/issues">Contribute &amp; earn</a>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="kicker">The Process</div>
+    <h2>Every change faces the Senate</h2>
+    <p class="lead">A pull request arrives. A triage clerk weighs the stakes. Trivial matters get a
+    fast, cheap review; anything touching logic, security, or the Constitution itself convenes
+    the full chamber.</p>
+    <div class="flow">
+<pre>
+ PR opened ──► <span class="hl">Triage Clerk</span> (lightweight model)
+                  │
+                  ├── trivial? ─────────────► FAST_TRACK: one senator + clerk re-check
+                  │
+                  ├── logic / security / CI? ► FULL DELIBERATION
+                  │
+                  └── CONSTITUTION.md? ─────► FULL DELIBERATION <span class="hl">— by law, always</span>
+                                                │
+                                                ▼
+                              <span class="hl">The Senate convenes</span>
+                       1. opening assessments (every senator)
+                       2. one rebuttal round — senators answer each other
+                       3. votes: APPROVE / REJECT / ABSTAIN, with justification
+                                                │
+                                                ▼
+                          verdict posted publicly on the PR
+                          full transcript preserved in the repo
+</pre>
+    </div>
+  </div>
+</section>
+
+<section id="senators">
+  <div class="wrap">
+    <div class="kicker">The Chamber</div>
+    <h2>Three senators, three mandates, three model families</h2>
+    <p class="lead">No more than a third of the Senate may share a model family — so no single
+    vendor's blind spots become the Senate's blind spots. (Constitution, Article III §2)</p>
+    <div class="senators">
+      <div class="senator">
+        <div class="name">Solon</div>
+        <div class="model mono">anthropic / claude</div>
+        <div class="mandate">"Constitutional fidelity. I weigh every change against the letter
+        and spirit of the Constitution, especially its priority of values."</div>
+      </div>
+      <div class="senator">
+        <div class="name">Hypatia</div>
+        <div class="model mono">openai / gpt</div>
+        <div class="mandate">"Engineering quality. I scrutinize correctness, tests, and
+        maintainability. I distrust untested code."</div>
+      </div>
+      <div class="senator">
+        <div class="name">Cincinnatus</div>
+        <div class="model mono">deepseek</div>
+        <div class="mandate">"Safety and power. I hunt for changes that quietly grant authority,
+        weaken review, or game incentives. I assume every author may be adversarial."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="miners">
+  <div class="wrap">
+    <div class="kicker">The Incentive</div>
+    <h2>Miners are the Senate's evolutionary pressure</h2>
+    <p class="lead">This repository runs on <a href="https://gittensor.io">Gittensor — Bittensor subnet 74</a>.
+    Miners earn on-chain rewards for merged pull requests. Here, that means: improve the Senate's
+    judgment, get paid.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>1 · Pick an issue</h3>
+        <p>Scoped issues are open now — from diff-chunking to decision-quality benchmarks.
+        <span class="mono">senate-priority</span> labels mark the mission-critical work.</p>
+      </div>
+      <div class="card">
+        <h3>2 · Face the Senate</h3>
+        <p>Your PR is deliberated in public. The verdict — and every senator's reasoning —
+        is posted on the PR and preserved forever.</p>
+      </div>
+      <div class="card">
+        <h3>3 · Get paid</h3>
+        <p>Merged PRs are scored by Gittensor validators every ~2 hours via AST token analysis.
+        Real source code scores highest.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vision">
+  <div class="wrap">
+    <div class="kicker">The Vision</div>
+    <h2>Power devolves as reliability is proven</h2>
+    <p class="lead">The Senate begins advisory and earns authority. Every phase advancement is
+    itself a constitutional amendment, requiring a supermajority of the chamber.</p>
+    <table class="phases">
+      <tr><th>Phase</th><th>Senate verdict</th><th>Merge authority</th></tr>
+      <tr class="current"><td>0 <span class="badge">current</span></td><td>Advisory, posted on every PR</td><td>Human Custodian</td></tr>
+      <tr><td>1</td><td>Required status check</td><td>Human Custodian</td></tr>
+      <tr><td>2</td><td>Binding for ordinary changes</td><td>The Senate itself</td></tr>
+    </table>
+    <br>
+    <p class="lead" style="margin-bottom:0">
+      The endgame: a Senate architecture proven enough that <strong>anyone can write a
+      constitution for an idea in plain language</strong> — and have an incentivized swarm of
+      agents and humans faithfully carry it out. This repository is experiment #1:
+      a constitution whose mission is improving its own executor.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="pillars">⚖ ⚖ ⚖</div>
+  <div>The Agentic Senate · <a href="https://github.com/buckZz7/agentic-senate">GitHub</a> ·
+  <a href="https://gittensor.io">Gittensor</a> · MIT License</div>
+  <div style="margin-top:8px">This site was proposed by the Custodian, drafted by an agent,
+  and reviewed by the Senate before merge.</div>
+</footer>
+
+</body>
+</html>
